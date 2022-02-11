@@ -16,7 +16,7 @@ class ChecklistController extends Controller
      */
     public function index()
     {
-        // TODO show all lists (including completed)
+        // TODO show all checklist (including completed)
     }
 
     /**
@@ -38,10 +38,10 @@ class ChecklistController extends Controller
      */
     public function store(StoreRequest $request)
     {
-        $list = new Checklist();
-        $list->title = $request->title;
-        $list->user()->associate(Auth::user());
-        $list->save();
+        $checklist = new Checklist();
+        $checklist->title = $request->title;
+        $checklist->user()->associate(Auth::user());
+        $checklist->save();
 
         return redirect()->route('dashboard')->with('success', __('checklist.store_success'));
     }
