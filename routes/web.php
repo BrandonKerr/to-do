@@ -26,7 +26,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::prefix('list')->name('list.')->group(function () {
         Route::get('{user}/complete', [ChecklistController::class, 'index'])->name('complete');
-        Route::get('{user}/index/{all?}', [ChecklistController::class, 'index'])->name('index');
+        Route::get('{user}/index/{all?}', [ChecklistController::class, 'index'])->name('index')->withTrashed();
         Route::get('create', [ChecklistController::class, 'create'])->name('create');
         Route::put('store', [ChecklistController::class, 'store'])->name('store');
         Route::get('edit/{checklist}', [ChecklistController::class, 'edit'])->name('edit');
@@ -45,6 +45,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::prefix('user')->name('user.')->group(function () {
         Route::get('index', [UserController::class, 'index'])->name('index');
+        Route::get('edit/{user}', [UserController::class, 'edit'])->name('edit');
+        Route::patch('update/{user}', [UserController::class, 'update'])->name('update');
+        Route::get('delete/{user}', [UserController::class, 'delete'])->name('delete');
+        Route::delete('destroy/{user}', [UserController::class, 'destroy'])->name('destroy');
     });
 });
 

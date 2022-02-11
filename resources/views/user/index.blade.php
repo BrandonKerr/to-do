@@ -39,12 +39,15 @@
                                 <div class="text-sm text-gray-900">{{ $user->role_display }}</div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-indigo-600 hover:text-indigo-900">
-                                <a href="{{route('list.index', ['user' => $user, 'all' => true])}}">{{ $user->checklists->count() }} lists</a>
+                                <a href="{{route('list.index', ['user' => $user, 'all' => true])}}">{{ $user->checklists()->withTrashed()->count() }} @choice('list|lists', $user->checklists()->withTrashed()->count())</a>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                {{-- TODO links --}}
-                            <a href="#" class="block text-indigo-600 hover:text-indigo-900">{{__('Edit')}}</a>
-                            <a href="#" class="block text-red-600 hover:text-red-900">{{__('Delete')}}</a>
+                            @can('update', $user)
+                                <a href="{{ route('user.edit', $user) }}" class="block text-indigo-600 hover:text-indigo-900">{{__('Edit')}}</a>
+                            @endcan
+                            @can('delete', $user)
+                                <a href="{{ route('user.delete', $user) }}" class="block text-red-600 hover:text-red-900">{{__('Delete')}}</a>
+                            @endcan
                             </td>
                         </tr>
                         @endforeach

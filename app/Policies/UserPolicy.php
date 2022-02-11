@@ -54,6 +54,17 @@ class UserPolicy
     }
 
     /**
+     * Determine whether the user can assign roles.
+     *
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function assignRoles(User $user)
+    {
+        return false;
+    }
+
+    /**
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
