@@ -36,12 +36,20 @@ class Checklist extends Model
 
     public function scopeIncomplete($query)
     {
-        $query->whereDoesntHave('todos', function (Builder $query) {
+        $query->whereDoesntHave('todos')
+        ->orWhereHas('todos', function (Builder $query) {
             $query->incomplete();
         })->get();
     }
 
-    protected $fillable = ['title'];
+    public function scopeComplete($query)
+    {
+        $query->whereHas('todos')
+            ->whereDoesntHave('todos', function (Builder $query) {
+                $query->incomplete();
+            })
+            ->get();
+    }
 
-    protected $appends = ['is_complete'];
+    protected $fillable = ['title'];
 }

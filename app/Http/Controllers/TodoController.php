@@ -22,7 +22,7 @@ class TodoController extends Controller
         $todo->checklist()->associate($checklist);
         $todo->save();
 
-        return redirect()->route('dashboard')->with('success', __('todo.store_success'));
+        return redirect()->back()->with('success', __('todo.store_success'));
     }
 
     /**

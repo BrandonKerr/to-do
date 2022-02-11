@@ -1,6 +1,8 @@
 <?php
 
 return [
+    'all' => 'All Checklists',
+    'completed' => 'Completed Checklists',
     'create' => 'New Checklist',
     'edit' => 'Edit Checklist',
     // Don't forget to use {!! trans_choice() !!} for this one to handle the html and the options
