@@ -10,9 +10,7 @@ class DashboardController extends Controller
     {
         // show the users current (incomplete) checklists
         $user = Auth::user();
-        $checklists = $user->checklists->filter( function ($value, $key) {
-            return $value->is_complete;
-        });
+        $checklists = $user->checklists()->incomplete()->get();
 
         return view('dashboard', compact('user', 'checklists'));
     }

@@ -31,6 +31,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Checklist::class);
     }
 
+    public function todos() 
+    {
+        return $this->hasManyThrough(Todo::class, Checklist::class);
+    }
+
     public function getRoleDisplayAttribute()
     {
         return  $this->is_admin ? 'Admin' : 'User';

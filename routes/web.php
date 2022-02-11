@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ChecklistController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\TodoController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,9 +30,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::patch('update/{checklist}', [ChecklistController::class, 'update'])->name('update');
         Route::delete('destroy/{checklist}', [ChecklistController::class, 'destroy'])->name('destroy');
     });
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+
+    Route::prefix('todo')->name('todo.')->group(function () {
+        Route::put('store/{todo}', [TodoController::class, 'store'])->name('store');
+        Route::get('edit/{todo}', [TodoController::class, 'edit'])->name('edit');
+        Route::patch('update/{todo}', [TodoController::class, 'update'])->name('update');
+        Route::get('delete/{todo}', [TodoController::class, 'delete'])->name('delete');
+        Route::delete('destroy/{todo}', [TodoController::class, 'destroy'])->name('destroy');
+    });
 });
 
 
