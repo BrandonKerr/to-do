@@ -4,14 +4,38 @@ namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
 
+    protected static function boot() {
+        parent::boot();
+    
+        // database cascading deletes don't work for soft deletes, so handle that here
+        static::deleting(function($user) {
+            $user->lists()->delete();
+        });
+
+        static::restoring(function($user) {
+            $user->lists()->restore();
+        });
+    }
+
+    public function lists() 
+    {
+        return $this->hasMany(Checklist::class);
+    }
+
+    public function getRoleDisplayAttribute()
+    {
+        return  $this->is_admin ? 'Admin' : 'User';
+    }
+    
     /**
      * The attributes that are mass assignable.
      *
@@ -21,6 +45,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'name',
         'email',
         'password',
+        'is_admin'
     ];
 
     /**
@@ -40,5 +65,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'is_admin' => 'boolean'
     ];
+    
 }
