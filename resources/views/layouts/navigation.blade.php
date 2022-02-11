@@ -15,6 +15,11 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    @can('viewAny', App\Models\User::class)
+                    <x-nav-link :href="route('user.index')" :active="request()->routeIs('user.index')">
+                        {{ __('Users') }}
+                    </x-nav-link>
+                    @endcan
                     <x-nav-link :href="route('list.complete', ['user' => Auth::user()])" :active="request()->routeIs('list.complete')">
                         {{ __('Completed Lists') }}
                     </x-nav-link>
