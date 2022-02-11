@@ -18,17 +18,22 @@ class User extends Authenticatable implements MustVerifyEmail
     
         // database cascading deletes don't work for soft deletes, so handle that here
         static::deleting(function($user) {
-            $user->lists()->delete();
+            $user->checklists()->delete();
         });
 
         static::restoring(function($user) {
-            $user->lists()->restore();
+            $user->checklists()->restore();
         });
     }
 
-    public function lists() 
+    public function checklists() 
     {
         return $this->hasMany(Checklist::class);
+    }
+
+    public function todos() 
+    {
+        return $this->hasManyThrough(Todo::class, Checklist::class);
     }
 
     public function getRoleDisplayAttribute()

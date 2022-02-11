@@ -1,13 +1,13 @@
 <?php
 
-namespace App\View\Components\Checklist;
+namespace App\View\Components\Todo;
 
 use Illuminate\View\Component;
 
-class Show extends Component
+class Create extends Component
 {
     public $checklist;
-    public $todos;
+
     /**
      * Create a new component instance.
      *
@@ -16,7 +16,6 @@ class Show extends Component
     public function __construct($checklist)
     {
         $this->checklist = $checklist;
-        $this->todos = $checklist->todos;
     }
 
     /**
@@ -26,6 +25,6 @@ class Show extends Component
      */
     public function render()
     {
-        return view('components.checklist.show');
+        return view('components.todo.create');
     }
 }

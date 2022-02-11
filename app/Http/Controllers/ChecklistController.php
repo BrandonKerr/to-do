@@ -16,7 +16,7 @@ class ChecklistController extends Controller
      */
     public function index()
     {
-        // TODO show all lists (including completed)
+        // TODO show all checklist (including completed)
     }
 
     /**
@@ -38,10 +38,10 @@ class ChecklistController extends Controller
      */
     public function store(StoreRequest $request)
     {
-        $list = new Checklist();
-        $list->title = $request->title;
-        $list->user()->associate(Auth::user());
-        $list->save();
+        $checklist = new Checklist();
+        $checklist->title = $request->title;
+        $checklist->user()->associate(Auth::user());
+        $checklist->save();
 
         return redirect()->route('dashboard')->with('success', __('checklist.store_success'));
     }
@@ -71,6 +71,19 @@ class ChecklistController extends Controller
         $checklist->update($request->all());
 
         return redirect()->route('dashboard')->with('success', __('checklist.update_success'));
+    }
+
+    /**
+     * Show the form for deleting the specified resource.
+     *
+     * @param  Checklist  $checklist
+     * @return \Illuminate\Http\Response
+     */
+    public function delete(Checklist $checklist)
+    {
+        $this->authorize('delete', $checklist);
+
+        return view('checklist.delete', compact('checklist'));
     }
 
     /**
