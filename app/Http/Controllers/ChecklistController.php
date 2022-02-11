@@ -74,6 +74,19 @@ class ChecklistController extends Controller
     }
 
     /**
+     * Show the form for deleting the specified resource.
+     *
+     * @param  Checklist  $checklist
+     * @return \Illuminate\Http\Response
+     */
+    public function delete(Checklist $checklist)
+    {
+        $this->authorize('delete', $checklist);
+
+        return view('checklist.delete', compact('checklist'));
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param  Checklist $checklist

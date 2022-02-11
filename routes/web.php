@@ -28,6 +28,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::put('store', [ChecklistController::class, 'store'])->name('store');
         Route::get('edit/{checklist}', [ChecklistController::class, 'edit'])->name('edit');
         Route::patch('update/{checklist}', [ChecklistController::class, 'update'])->name('update');
+        Route::get('delete/{checklist}', [ChecklistController::class, 'delete'])->name('delete');
         Route::delete('destroy/{checklist}', [ChecklistController::class, 'destroy'])->name('destroy');
     });
 
