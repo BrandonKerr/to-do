@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Checklist\StoreRequest;
 use App\Http\Requests\Checklist\UpdateRequest;
 use App\Models\Checklist;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class ChecklistController extends Controller
@@ -14,10 +15,21 @@ class ChecklistController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(User $user, $all = false)
     {
-        // TODO show all checklist (including completed)
+        $this->authorize('view', $user);
+        $checklists = $user->checklists()
+            ->when($all, function($query) {
+                return $query->withTrashed();            
+            })    
+            ->when(!$all, function($query) {
+                return $query->complete();            
+            })
+            ->get();
+
+        return view('checklist.index', compact('user', 'checklists', 'all'));
     }
+    
 
     /**
      * Show the form for creating a new resource.

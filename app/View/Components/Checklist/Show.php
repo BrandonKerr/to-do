@@ -13,10 +13,14 @@ class Show extends Component
      *
      * @return void
      */
-    public function __construct($checklist)
+    public function __construct($checklist, $all = false)
     {
         $this->checklist = $checklist;
-        $this->todos = $checklist->todos;
+        if ($all) {
+            $this->todos = $checklist->todos()->withTrashed()->get();
+        } else {
+            $this->todos = $checklist->todos;
+        }
     }
 
     /**

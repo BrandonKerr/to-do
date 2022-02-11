@@ -15,6 +15,9 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('list.complete', ['user' => Auth::user()])" :active="request()->routeIs('list.complete')">
+                        {{ __('Completed Lists') }}
+                    </x-nav-link>
                 </div>
             </div>
 
