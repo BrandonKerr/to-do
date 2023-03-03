@@ -4,8 +4,7 @@ namespace App\View\Components\Todo;
 
 use Illuminate\View\Component;
 
-class Create extends Component
-{
+class Create extends Component {
     public $checklist;
 
     /**
@@ -13,8 +12,7 @@ class Create extends Component
      *
      * @return void
      */
-    public function __construct($checklist)
-    {
+    public function __construct($checklist) {
         $this->checklist = $checklist;
     }
 
@@ -23,8 +21,7 @@ class Create extends Component
      *
      * @return \Illuminate\Contracts\View\View|\Closure|string
      */
-    public function render()
-    {
-        return view('components.todo.create');
+    public function render() {
+        return view("components.todo.create");
     }
 }

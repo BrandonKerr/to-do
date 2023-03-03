@@ -4,8 +4,7 @@ namespace App\View\Components\Todo;
 
 use Illuminate\View\Component;
 
-class Show extends Component
-{
+class Show extends Component {
     public $todo;
 
     /**
@@ -13,8 +12,7 @@ class Show extends Component
      *
      * @return void
      */
-    public function __construct($todo)
-    {
+    public function __construct($todo) {
         $this->todo = $todo;
     }
 
@@ -23,8 +21,7 @@ class Show extends Component
      *
      * @return \Illuminate\Contracts\View\View|\Closure|string
      */
-    public function render()
-    {
-        return view('components.todo.show');
+    public function render() {
+        return view("components.todo.show");
     }
 }

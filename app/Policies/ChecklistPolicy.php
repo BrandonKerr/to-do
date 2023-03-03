@@ -6,15 +6,13 @@ use App\Models\Checklist;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class ChecklistPolicy
-{
+class ChecklistPolicy {
     use HandlesAuthorization;
 
     /**
      * Allow site admin to do whatever they want
      */
-    public function before($user)
-    {
+    public function before($user) {
         if ($user->is_admin) {
             return true;
         }
@@ -26,8 +24,7 @@ class ChecklistPolicy
      * @param  \App\Models\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function viewAny(User $user)
-    {
+    public function viewAny(User $user) {
         return false;
     }
 
@@ -38,8 +35,7 @@ class ChecklistPolicy
      * @param  \App\Models\Checklist  $checklist
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Checklist $checklist)
-    {
+    public function view(User $user, Checklist $checklist) {
         return $checklist->user->is($user);
     }
 
@@ -49,8 +45,7 @@ class ChecklistPolicy
      * @param  \App\Models\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function create(User $user)
-    {
+    public function create(User $user) {
         return true;
     }
 
@@ -61,8 +56,7 @@ class ChecklistPolicy
      * @param  \App\Models\Checklist  $checklist
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, Checklist $checklist)
-    {
+    public function update(User $user, Checklist $checklist) {
         return $checklist->user->is($user);
     }
 
@@ -73,8 +67,7 @@ class ChecklistPolicy
      * @param  \App\Models\Checklist  $checklist
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Checklist $checklist)
-    {
+    public function delete(User $user, Checklist $checklist) {
         return $checklist->user->is($user);
     }
 
@@ -85,8 +78,7 @@ class ChecklistPolicy
      * @param  \App\Models\Checklist  $checklist
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, Checklist $checklist)
-    {
+    public function restore(User $user, Checklist $checklist) {
         return false;
     }
 
@@ -97,8 +89,7 @@ class ChecklistPolicy
      * @param  \App\Models\Checklist  $checklist
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, Checklist $checklist)
-    {
+    public function forceDelete(User $user, Checklist $checklist) {
         return false;
     }
 }
