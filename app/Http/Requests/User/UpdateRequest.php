@@ -2,20 +2,18 @@
 
 namespace App\Http\Requests\User;
 
-use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateRequest extends FormRequest
-{
+class UpdateRequest extends FormRequest {
     /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
-    public function authorize()
-    {
-        $user = User::findOrFail($this->route('user')->id);
-        return $this->user()->can('update', $user);
+    public function authorize() {
+        $user = $this->route("user");
+
+        return $this->user()->can("update", $user);
     }
 
     /**
@@ -23,22 +21,20 @@ class UpdateRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
-    {
+    public function rules() {
         return [
-            'name' => 'required|max:255',
-            'email' => 'required|email',
-            'is_admin' => 'boolean'
+            "name" => "required|max:255",
+            "email" => "required|email",
+            "is_admin" => "boolean",
         ];
     }
 
-    public function messages()
-    {
+    public function messages() {
         return [
-            'name.required' => __('user.name_required'),
-            'name.max' => __('user.name_max'),
-            'email.required' => __('user.email_required'),
-            'email.email' => __('user.email_email'),
+            "name.required" => __("user.name_required"),
+            "name.max" => __("user.name_max"),
+            "email.required" => __("user.email_required"),
+            "email.email" => __("user.email_email"),
         ];
     }
 }

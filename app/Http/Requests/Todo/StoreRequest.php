@@ -2,21 +2,19 @@
 
 namespace App\Http\Requests\Todo;
 
-use App\Models\Checklist;
 use App\Models\Todo;
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreRequest extends FormRequest
-{
+class StoreRequest extends FormRequest {
     /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
-    public function authorize()
-    {
-        $checklist = Checklist::findOrFail($this->route('checklist')->id);
-        return $this->user()->can('create', Todo::class) && $this->user()->can('update', $checklist);
+    public function authorize() {
+        $checklist = $this->route("checklist");
+
+        return $this->user()->can("create", Todo::class) && $this->user()->can("update", $checklist);
     }
 
     /**
@@ -24,18 +22,16 @@ class StoreRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
-    {
+    public function rules() {
         return [
-            'title' => 'required|max:255'
+            "title" => "required|max:255",
         ];
     }
 
-    public function messages()
-    {
+    public function messages() {
         return [
-            'title.required' => __('todo.title_required'),
-            'title.max' => __('todo.title_max'),
+            "title.required" => __("todo.title_required"),
+            "title.max" => __("todo.title_max"),
         ];
     }
 }

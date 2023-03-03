@@ -2,20 +2,18 @@
 
 namespace App\Http\Requests\Checklist;
 
-use App\Models\Checklist;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateRequest extends FormRequest
-{
+class UpdateRequest extends FormRequest {
     /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
-    public function authorize()
-    {
-        $checklist = Checklist::findOrFail($this->route('checklist')->id);
-        return $this->user()->can('update', $checklist);
+    public function authorize() {
+        $checklist = $this->route("checklist");
+
+        return $this->user()->can("update", $checklist);
     }
 
     /**
@@ -23,10 +21,9 @@ class UpdateRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
-    {
+    public function rules() {
         return [
-            'title' => 'required|max:255'
+            "title" => "required|max:255",
         ];
     }
 }
