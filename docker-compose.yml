@@ -10,7 +10,7 @@ services:
     ports:
       - '127.0.0.1:3306:3306'
   app:
-    image: docker.io/bitnami/laravel:8
+    image: docker.io/bitnami/laravel:9
     ports:
       - '8000:8000'
     environment:
