@@ -1,24 +1,48 @@
-version: '2'
+version: "3"
+
 services:
-  mariadb:
-    image: docker.io/bitnami/mariadb:10.6
+  app:
+    build:
+      args:
+        user: todo
+        uid: 1000
+      context: ./
+      dockerfile: Dockerfile
+    image: todo
+    container_name: todo-app
+    restart: unless-stopped
+    working_dir: /var/www/
+    volumes:
+      - ./:/var/www
+    networks:
+      - todo
+  db:
+    image: mariadb:10.7
+    container_name: todo-db
+    restart: unless-stopped
     environment:
-      # ALLOW_EMPTY_PASSWORD is recommended only for development.
-      - ALLOW_EMPTY_PASSWORD=yes
-      - MARIADB_USER=bn_todo
-      - MARIADB_DATABASE=todo
+      MARIADB_DATABASE: ${DB_DATABASE}
+      MARIADB_ROOT_PASSWORD: ${DB_PASSWORD}
+      MARIADB_PASSWORD: ${DB_PASSWORD}
+      MARIADB_USER: ${DB_USERNAME}
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mariadb
     ports:
       - '127.0.0.1:3306:3306'
-  app:
-    image: docker.io/bitnami/laravel:10
+    networks:
+      - todo
+  nginx:
+    image: nginx:1.23-alpine
+    container_name: todo-nginx
+    restart: unless-stopped
     ports:
-      - '8000:8000'
-    environment:
-      - DB_HOST=mariadb
-      - DB_PORT=3306
-      - DB_USERNAME=bn_todo
-      - DB_DATABASE=todo
+      - 8000:80
     volumes:
-      - './:/app'
-    depends_on:
-      - mariadb
+      - ./:/var/www
+      - ./docker-compose/nginx:/etc/nginx/conf.d
+    networks:
+      - todo
+
+networks:
+  todo:
+    driver: bridge
