@@ -44,11 +44,11 @@ class Checklist extends Model {
 
         // database cascading deletes don't work for soft deletes, so handle that here
         static::deleting(function ($checklist) {
-            $checklist->todos()->delete();
+            $checklist->todos()->each(fn (Todo $todo) => $todo->delete());
         });
 
         static::restoring(function ($checklist) {
-            $checklist->todos()->restore();
+            $checklist->todos()->withTrashed()->each(fn (Todo $todo) => $todo->restore());
         });
     }
 

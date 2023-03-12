@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Checklist;
+use App\Models\Definitions\TodoDefinition;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -32,5 +34,41 @@ class UserFactory extends Factory {
                 "email_verified_at" => null,
             ];
         });
+    }
+
+    /**
+     * Indicate that the model's is an admin.
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    public function admin(): self {
+        return $this->state(function (array $attributes) {
+            return [
+                "is_admin" => true,
+            ];
+        });
+    }
+
+    /**
+     * Add a checklist relationship to the model
+     *
+     * @param string|null $title
+     * @param array<TodoDefinition>|null $todos
+     *
+     * @return self
+     */
+    public function withChecklist(?string $title = null, ?array $todos = null): self {
+        return $this->has(Checklist::factory([
+            "title" => $title ?? $this->faker->words(rand(1, 5), true),
+        ])
+            ->when(! is_null($todos), function (ChecklistFactory $factory) use ($todos) {
+                foreach ($todos as $todo) {
+                    $factory = $factory->withTodo($todo);
+                }
+
+                return $factory;
+            }),
+            "checklists"
+        );
     }
 }

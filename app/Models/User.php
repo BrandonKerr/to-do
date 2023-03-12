@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Enums\RoleEnum;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -61,11 +62,11 @@ class User extends Authenticatable implements MustVerifyEmail {
 
         // database cascading deletes don't work for soft deletes, so handle that here
         static::deleting(function ($user) {
-            $user->checklists()->delete();
+            $user->checklists()->each(fn (Checklist $checklist) => $checklist->delete());
         });
 
         static::restoring(function ($user) {
-            $user->checklists()->restore();
+            $user->checklists()->withTrashed()->each(fn (Checklist $checklist) => $checklist->restore());
         });
     }
 
@@ -78,7 +79,7 @@ class User extends Authenticatable implements MustVerifyEmail {
     }
 
     public function getRoleDisplayAttribute() {
-        return  $this->is_admin ? "Admin" : "User";
+        return  $this->is_admin ? RoleEnum::Admin->value : RoleEnum::User->value;
     }
 
     /**
