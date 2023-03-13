@@ -1,9 +1,9 @@
 ## To-Do App
-<p>
+
 [![Tests](https://github.com/BrandonKerr/to-do/actions/workflows/tests.yml/badge.svg)](https://github.com/BrandonKerr/to-do/actions/workflows/tests.yml)
 [![PHP Static Analysis](https://github.com/BrandonKerr/to-do/actions/workflows/php-stan.yml/badge.svg)](https://github.com/BrandonKerr/to-do/actions/workflows/php-stan.yml)
 [![codecov](https://codecov.io/gh/BrandonKerr/to-do/branch/master/graph/badge.svg?token=SEFBKJVM1G)](https://codecov.io/gh/BrandonKerr/to-do)
-</p>
+
 This is a simple demo app where users can manage to-do lists. This was originally built with Laravel 8.x (PHP 7.4), the [Laravel Breeze](https://laravel.com/docs/8.x/starter-kits#laravel-breeze) package, and styled with [Tailwind CSS](https://tailwindcss.com/). It has sicne been updated to Laravel 10.x and PHP 8.1.
 
 This app was built to address the following functionality needs:
