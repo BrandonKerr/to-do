@@ -51,9 +51,9 @@ jobs:
       run: php artisan test --parallel --coverage-clover=clover.xml"
 
     - name: Generate coverage report
-        uses: codecov/codecov-action@v3
-        with:
-          file: ./clover.xml
-          flags: unittests
-          name: codecov-umbrella
-          fail_ci_if_error: true
+    - uses: codecov/codecov-action@v3
+      with:
+        file: ./clover.xml
+        flags: unittests
+        name: codecov-umbrella
+        fail_ci_if_error: true
