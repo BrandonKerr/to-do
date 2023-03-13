@@ -48,7 +48,7 @@ jobs:
       env:
         DB_CONNECTION: sqlite
         DB_DATABASE: database/database.sqlite
-      run: php artisan test --parallel --coverage-clover=clover.xml"
+      run: php artisan test --parallel --coverage-clover=clover.xml
 
     - name: Generate coverage report
     - uses: codecov/codecov-action@v3
